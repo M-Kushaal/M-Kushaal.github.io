@@ -864,3 +864,7 @@ body.editing .ach-box > li { padding-right: 190px; }
 
 /* ICLR card: very faint warm tint so it reads slightly apart from the white cards */
 .card.card-featured { background: #fbf2d3; }
+
+/* Beyond ML: even spacing above and below each divider */
+.sub-section + .sub-section { margin-top: 56px; padding-top: 56px; }
+.sub-section .timeline .tl-item:last-child { padding-bottom: 0; }

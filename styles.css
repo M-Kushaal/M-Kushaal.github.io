@@ -861,3 +861,6 @@ body.editing .ach-box > li { padding-right: 190px; }
 }
 /* no double divider where a timeline ends right before the next sub-section */
 .sub-section .timeline .tl-item:last-child { border-bottom: 0; }
+
+/* ICLR card: very faint warm tint so it reads slightly apart from the white cards */
+.card.card-featured { background: #fcfaf3; }

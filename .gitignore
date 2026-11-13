@@ -1,0 +1,5 @@
+# Local-only files (never published)
+.dev-tools/
+.backups/
+__pycache__/
+*.pdf

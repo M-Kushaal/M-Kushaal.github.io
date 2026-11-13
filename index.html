@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kushaal Matam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&amp;family=Poppins:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ===== Title bar ===== -->
+  <header class="site-header" id="siteHeader">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#home" class="active" aria-current="true">Home</a>
+      <a href="#experience">Professional Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#beyond">Beyond ML</a>
+      <a href="#blogs">Blogs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main" class="pages">
+
+    <!-- ===== Home ===== -->
+    <section tabindex="-1" class="page hero" id="home">
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">Kushaal Matam</h1>
+        <p class="hero-tagline" style="max-width: 37em;">Hey! I'm Kushaal, a student at IIT Bombay who loves machine learning. I work on making large models faster and more efficient, currently on World Models at EPFL and previously on speech AI at Samsung. Outside of that, I'm usually reading about the latest ML research.</p>
+        <ul class="hero-links">
+          <li><a class="btn btn-solid" href="#projects">View my work</a></li>
+          <li><a class="btn" href="https://www.linkedin.com/in/matam-kushaal-553268297" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a class="btn" href="https://github.com/M-Kushaal" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a class="btn" href="mailto:kushaalmatam1@gmail.com">Email</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Professional Experience ===== -->
+    <section tabindex="-1" class="page section alt" id="experience">
+      <p class="eyebrow">Where I've worked</p>
+      <h2>Professional Experience</h2>
+
+      <ol class="timeline">
+        <li class="tl-item">
+          <div class="tl-logo"><img src="logos/epfl.png" alt="EPFL logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">Sep 2026 – Present</span>
+            <span class="tl-place">Lausanne, Switzerland</span>
+          </div>
+          <div class="tl-body">
+            <h3>École Polytechnique Fédérale de Lausanne (EPFL)</h3>
+            <p class="tl-role">Semester Exchange &amp; Research Project · VITA Lab</p>
+            <ul>
+              <li>Developing Adaptive Spatial Token Allocation methods to improve the efficiency of the VITA Lab's GEM World Model</li>
+              <li>Building multi-GPU distributed inference pipelines for the lab's video generation models</li>
+              <li>Implementing a training-free, Pyramid-Flow-style multi-scale denoising scheme for a DiT-based audio-video foundation model</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <div class="tl-logo"><img src="logos/samsung.png" alt="Samsung logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">May – Jul 2026</span>
+            <span class="tl-place">South Korea</span>
+          </div>
+          <div class="tl-body">
+            <h3>Samsung Electronics HQ · AI Solutions Lab</h3>
+            <p class="tl-role">Associate Software Engineering Intern · Digital Appliances, Device eXperience</p>
+            <ul>
+              <li>Designed an architecture that turns speech into tokens an existing multimodal LLM can read, built on pre-trained speech encoders (w2v-BERT, Whisper) in a low-resource setting</li>
+              <li>Mapped these speech tokens into a shared speech–text embedding space, so audio goes straight to the LLM and the speech-to-text transcription step is removed from the pipeline</li>
+            <li>Ran the end-to-end pipeline: synthesizing and preprocessing Korean speech data, training the shared embedding space, and prompt design for Qwen2-0.5B and 1.5B</li></ul>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <div class="tl-logo"><img src="logos/worldquant.jpg" alt="WorldQuant logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">2025</span>
+            <span class="tl-place">Remote</span>
+          </div>
+          <div class="tl-body">
+            <h3>WorldQuant</h3>
+            <p class="tl-role">Quantitative Research Consultant</p>
+            <ul>
+              <li>Selected as a Quantitative Research Consultant on the strength of my International Quant Championship ranking</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <div class="tl-logo"><img src="logos/apnamart.png" alt="ApnaMart logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">May – Jul 2025</span>
+            <span class="tl-place">Bangalore, India</span>
+          </div>
+          <div class="tl-body">
+            <h3>ApnaMart</h3>
+            <p class="tl-role">Founder's Office Intern · Data Analytics · Indian retail startup</p>
+            <ul>
+              
+              
+            <li>Built an interactive warehouse planogram system to improve warehouse efficiency</li><li>Segmented complaints using AOV, LTV, and Billing Data to trace root causes and propose improvements</li><li>Audited the new Reorder Point (ROP) formula using historical order data to validate accuracy across SKUs</li></ul>
+          </div>
+        </li>
+
+        <li class="tl-item">
+          <div class="tl-logo"><img src="logos/urc.jpg" alt="University Rover Challenge logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">June 2024</span>
+            <span class="tl-place">Hanksville, Utah, USA</span>
+          </div>
+          <div class="tl-body">
+            <h3>University Rover Challenge · The Mars Society</h3>
+            <p class="tl-role">Team IIT Bombay · Mars Desert Research Station</p>
+            <ul>
+              <li>One of a 12-member team that built a semi-autonomous rover for equipment servicing, habitability and life detection, and extreme terrain traversal</li>
+              <li>The only freshman in the institute selected to represent IIT Bombay</li>
+              <li>Placed 9th in the Science mission and 22nd overall among top international teams</li>
+            </ul>
+          </div>
+        </li>
+      <li class="tl-item">
+          <div class="tl-logo"><img src="logos/iitb.png" alt="IIT Bombay logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">Jul – Nov 2025</span>
+            <span class="tl-place">Mumbai, India</span>
+          </div>
+          <div class="tl-body">
+            <h3>Artificial Intelligence and Data Science (PH-227)</h3>
+            <p class="tl-role">Teaching Assistant</p>
+            <ul></ul>
+          </div>
+        </li><li class="tl-item">
+          <div class="tl-logo"><img src="logos/iitb.png" alt="IIT Bombay logo"></div>
+          <div class="tl-meta">
+            <span class="tl-date">Jan – May 2025</span>
+            <span class="tl-place">Mumbai, India</span>
+          </div>
+          <div class="tl-body">
+            <h3>Introduction to Classical &amp; Quantum Physics (PH-110)</h3>
+            <p class="tl-role">Teaching Assistant</p>
+            <ul></ul>
+          </div>
+        </li></ol>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section tabindex="-1" class="page section" id="projects">
+      <p class="eyebrow">Things I've built</p>
+      <h2>Projects</h2>
+
+      <div class="card-grid">
+        <article class="card card-featured" data-project="regularized-wasserstein-barycenters">
+          <p class="card-kicker">Research Paper · Jan–Apr 2026</p>
+          <h3>Regularized Wasserstein Barycenters</h3>
+          <p class="card-note">Submitted to ICLR 2027 (under review)</p>
+          <p>A method to aggregate rankers into a Wasserstein barycenter using a greedy support approach with a Sinkhorn-free proxy, for both balanced and unbalanced settings. Derived weak submodularity guarantees and trained a neural reranker via barycenter distillation and triplet loss.</p>
+          <ul class="tags"><li>Optimal Transport</li><li>Ranking</li><li>PyTorch</li></ul>
+        </article>
+
+        
+
+        <article class="card" data-project="new-title-2">
+          <p class="card-kicker">Personal Project</p>
+          <h3>SwarmTest</h3>
+          
+          <p>A swarm of AI personas that click through your web app like real users, and report exactly where they struggle.</p>
+          <ul class="tags"><li>AI Agents</li><li>LLMs</li><li>Testing</li></ul>
+        </article><article class="card" data-project="graphtrans-interleaved" data-link="https://github.com/TejasSharma1729/GraphTransLWG">
+          <p class="card-kicker">Academic Project · Learning with Graphs · Jan–May 2026</p>
+          <h3>GraphTrans-InterLeaved</h3>
+          <p>A hybrid GNN that interleaves message-passing layers with Transformer global-attention layers, plus CLS-token injection and readout. Benchmarked on NCI1/NCI109 graph classification and ogbg-code2 method-name prediction.</p>
+          <ul class="tags"><li>GNNs</li><li>Transformers</li></ul>
+        </article><article class="card" data-project="phone-camera-3d-capture" data-link="https://the-better-splat-viewer.vercel.app/">
+          <p class="card-kicker">Personal Project</p>
+          <h3>Phone-Camera 3D Capture</h3>
+          <p>Software that builds 3D models of objects and rooms from just a phone camera, paired with a free, zero-install browser viewer for immersive, editable Gaussian Splats.</p>
+          <ul class="tags"><li>3D Gaussian Splatting</li><li>Web</li></ul>
+        </article><article class="card" data-project="myworld" data-link="https://my-world-rosy.vercel.app/">
+          <p class="card-kicker">Personal Project</p>
+          <h3>MyWorld</h3>
+          <p>An AI-powered 3D world generator that turns one-sentence prompts into modular, instantly editable 3D scenes, with on-demand rendering entirely on the CPU.</p>
+          <ul class="tags"><li>Generative AI</li><li>3D</li></ul>
+        </article>
+
+        
+
+        <article class="card" data-project="new-title-3" data-link="https://github.com/M-Kushaal/VLSI_End_to_End_Agent">
+          <p class="card-kicker">Personal Project</p>
+          <h3>VLSI End to End Agent</h3>
+          
+          <p>An AI agent that takes a circuit spec all the way to custom silicon layout: it draws every transistor, then runs design checks and simulation before sign-off.</p>
+          <ul class="tags"><li>AI Agents</li><li>VLSI</li><li>EDA</li></ul>
+        </article><article class="card" data-project="noise-resilient-quantum-ml-for-vqcs">
+          <p class="card-kicker">Quantum Communications &amp; Networks · Jan–Apr 2026</p>
+          <h3>Noise-Resilient Quantum ML for VQCs</h3>
+          <p>Studied Variational Quantum Classifiers under noise: how angle, amplitude and basis encodings shape decision boundaries on XOR, Iris and Wine, and tested a hybrid encoding strategy.</p>
+          <ul class="tags"><li>Quantum ML</li><li>Benchmarking</li></ul>
+        </article>
+
+        <article class="card" data-project="vision-language-remote-sensing-captioning">
+          <p class="card-kicker">Machine Learning · Jul–Nov 2025</p>
+          <h3>Vision-Language Remote Sensing Captioning</h3>
+          <p>CNN+LSTM and CNN+Transformer captioning models on RSICD (10.9k aerial images), with a full pipeline from tokenization to feature extraction. Evaluated with BLEU-4 and METEOR, plus Grad-CAM and attention analysis.</p>
+          <ul class="tags"><li>Vision-Language</li><li>Transformers</li><li>CNN</li><li>LSTM</li></ul>
+        </article>
+
+        <article class="card" data-project="implied-volatility-predictor">
+          <p class="card-kicker">Kaggle Competition · June 2025</p>
+          <h3>Implied Volatility Predictor</h3>
+          <p>A modular ML pipeline forecasting implied volatility across multi-strike options. Engineered moneyness and time-to-expiry features, used Black-Scholes with Newton-Raphson to compute implied-volatility targets, and reached a hidden-test MSE below 0.005.</p>
+          <ul class="tags"><li>Quant</li><li>ML Pipeline</li></ul>
+        </article>
+
+        <article class="card" data-project="pipelined-cpu">
+          <p class="card-kicker">Academic Project · Microprocessors · Jan–May 2025</p>
+          <h3>Pipelined CPU</h3>
+          <p>A single-cycle CPU in VHDL, extended into a 5-stage pipeline (fetch, decode, execute, memory, write-back) with data forwarding and hazard detection for RAW dependencies.</p>
+          <ul class="tags"><li>VHDL</li><li>Computer Architecture</li></ul>
+        </article>
+      <article class="card" data-project="new-title">
+          <p class="card-kicker">Academic Project · Spiking Neural Networks</p>
+          <h3>SNN Bot</h3>
+          
+          <p>Built a robot controlled entirely by a spiking neural network (SNN) instead of a conventional artificial neural network, handling obstacle avoidance and autonomous navigation.</p>
+          <ul class="tags"><li>SNNs</li></ul>
+        </article>
+
+        <article class="card" data-project="crystal-graph-cnn">
+          <p class="card-kicker">Course Project · Introduction to Machine Learning · Aug–Nov 2024</p>
+          <h3>Crystal Graph CNN</h3>
+          <p>Implemented a Crystal Graph CNN (after Xie &amp; Grossman, 2018) that predicts material properties like bulk modulus from crystal structure (CIF) files: atoms become nodes with one-hot encoded features, and bonds between neighbouring atoms become edges. Benchmarked predictions against DFT-computed values.</p>
+          <ul class="tags"><li>GNNs</li><li>Materials ML</li><li>PyTorch</li></ul>
+        </article>
+
+        
+      </div>
+    </section>
+
+    <!-- ===== Beyond ML (Achievements, PORs, Hobbies) ===== -->
+    <section tabindex="-1" class="page section" id="beyond">
+      <p class="eyebrow">More about me</p>
+      <h2>Beyond ML</h2>
+
+  <div class="sub-section" id="achievements">
+        <p class="eyebrow">Milestones</p>
+        <h3 class="sub-title">Achievements</h3>
+
+        <ul class="ach-box">
+          <li><span class="ach-text"><strong>All India Rank 8</strong> in the <strong>Integral Cup 2026</strong>, held at<b> IIT Delhi</b>, sponsored by <b>Jane Street, Da Vinci, Optiver, QRT</b> and others</span><span class="ach-year">2026</span></li>
+          <li><span class="ach-text">One of <strong>44 students</strong> shortlisted to represent India at the <strong>International Olympiad of Astronomy (IOQA)</strong></span><span class="ach-year">2022</span></li><li><span class="ach-text">Placed in the <strong>top 1% nationally</strong> in both the <strong>National Standard Examination in Physics (NSEP)</strong> and the <strong>National Standard Examination in Astronomy (NSEA)</strong></span><span class="ach-year">2022</span></li><li><span class="ach-text">Achieved <strong>All India Rank 48</strong> in the <strong>Kishore Vaigyanik Protsahan Yojana (KVPY)</strong> examination</span><span class="ach-year">2022</span></li><li><span class="ach-text">Awarded <strong>6 Academic Proficiency Grades</strong><b> at IIT Bombay</b>, in Machine Learning (×2), Electrical Engineering, Classical &amp; Quantum Physics, Electronic Devices &amp; Circuits and more</span><span class="ach-year">2026</span></li>
+          <li><span class="ach-text">Received the <strong>Institute Award for Academic Excellence</strong> at IIT Bombay for an exemplary academic record</span><span class="ach-year">2024</span></li>
+          <li><span class="ach-text">Qualified <strong>NTSE Stage 1</strong> with <strong>State Rank 4</strong> and selected for the national scholarship in <b>Stage 2</b></span><span class="ach-year">2022</span></li><li><span class="ach-text">Secured <strong>All India Rank 370</strong> in <strong>JEE Advanced</strong> and <strong>All India Rank 692</strong> in <strong>JEE Main</strong></span><span class="ach-year">2023</span></li>
+        
+        
+        
+        
+        
+        </ul>
+      </div>
+
+  <div class="sub-section" id="pors">
+        <p class="eyebrow">Leadership</p>
+        <h3 class="sub-title">Positions of Responsibility</h3>
+
+        <ol class="timeline">
+        
+
+          <li class="tl-item">
+            <div class="tl-logo"><img src="logos/moodi.png" alt="Mood Indigo logo"></div>
+            <div class="tl-meta">
+              <span class="tl-date">May – Dec 2024</span>
+              <span class="tl-place">Mumbai, India</span>
+            </div>
+            <div class="tl-body">
+              <h3>Competitions &amp; LYP Coordinator</h3>
+              <p class="tl-role">Mood Indigo, Asia's largest college cultural festival</p>
+              <p class="tl-note">146,000+ footfall · 4,000+ colleges · 240+ events · 80+ competitions</p>
+              <ul>
+                <li>Conceptualized and ran 60+ cultural competitions built around current trends, drawing 15,000+ participants</li>
+                <li>Guided 200+ Cultural Heads and organized nationwide eliminations in 15+ cities</li>
+                <li>Curated competitions with a 150+ member expert judging panel to keep evaluation fair</li>
+              </ul>
+            </div>
+          </li><li class="tl-item">
+            <div class="tl-logo"><img src="logos/mrt.png" alt="Mars Rover Team logo"></div>
+            <div class="tl-meta">
+              <span class="tl-date">Sep 2023 – Dec 2024</span>
+              <span class="tl-place">Mumbai, India</span>
+            </div>
+            <div class="tl-body">
+              <h3>Junior Design Engineer</h3>
+              <p class="tl-role">Mars Rover Team, IIT Bombay</p>
+              <ul>
+                <li>Designed a PCB that transcodes quadrature encoder A/B pulse streams into CAN High/Low differential signals</li>
+                <li>Built a joystick interface publishing rover movement commands over ROS 2</li>
+                <li>Developed ArUco marker detection for live video streams with precise marker tag recognition</li>
+              </ul>
+            </div>
+          </li><li class="tl-item">
+            <div class="tl-logo"><img src="logos/eesa.png" alt="EESA logo"></div>
+            <div class="tl-meta">
+              <span class="tl-date">Aug 2024 – Aug 2025</span>
+              <span class="tl-place">Mumbai, India</span>
+            </div>
+            <div class="tl-body">
+              <h3>Class Representative</h3>
+              <p class="tl-role">Electrical Engineering, IIT Bombay</p>
+              <ul>
+                <li>Elected by a batch of 200+ Electrical Engineering students to represent their academic needs and concerns</li>
+                <li>Handled timetable-clash resolutions and communication between the class and professors</li>
+              
+              </ul>
+            </div>
+          </li>
+
+        
+        </ol>
+      </div>
+
+  <div class="sub-section" id="hobbies">
+        <p class="eyebrow">Off the clock</p>
+        <h3 class="sub-title">Hobbies &amp; Side Quests</h3>
+
+        <div class="card-grid">
+          <article class="card">
+            <p class="card-kicker">Maths Club, IIT Bombay · 2025</p>
+            <h3>Bazinga: 2nd Place</h3>
+            <p>Second place in the Maths &amp; Physics Club's flagship quizzing event, sponsored by Optiver.</p>
+          </article>
+          <article class="card">
+            <p class="card-kicker">IMC Trading × Techfest · 2025</p>
+            <h3>National Integration Challenge</h3>
+            <p>One of 5 students from IIT Bombay selected for the challenge.</p>
+          </article>
+          <article class="card">
+            <p class="card-kicker">Volunteer Teaching</p>
+            <h3>Core EE Tutorial</h3>
+            <p>Led a tutorial session on Electrical Engineering topics for 700+ freshmen.</p>
+          </article>
+          <article class="card">
+            <p class="card-kicker">Electronics &amp; Robotics Club</p>
+            <h3>Best Mentor, XLR8</h3>
+            <p>Awarded Best Mentor out of 100+ mentors at the Electronics &amp; Robotics Club's flagship event in 2024, where students build RC cars from scratch.</p>
+          </article>
+          <article class="card">
+            <p class="card-kicker">Sports</p>
+            <h3>Lawn Tennis</h3>
+            <p>Competed at the national level in India, with a peak All India Tennis Association ranking of 239. At IIT Bombay, won Gold in the Freshers' Open and Silver in the General Championships.</p>
+          </article><article class="card">
+            <p class="card-kicker">Mountain Cliff Scaling</p>
+            <h3>K6 Via Ferrata</h3>
+            <p>Scaled the Via Ferrata Farinetta in Saillon, Switzerland (a K3 + K4 + K6 route) on my first via ferrata climb.</p>
+          </article>
+          <article class="card">
+            <p class="card-kicker">Cooking</p>
+            <h3>MTR Cooking Challenge</h3>
+            <p>Achieved 3rd place in the MTR Spices Open-for-All-Ages Cooking Challenge held in Hyderabad, Telangana, India.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Blogs ===== -->
+    <section tabindex="-1" class="page section alt" id="blogs">
+      <p class="eyebrow">Writing</p>
+      <h2>Blogs</h2>
+      <p class="blog-note">Coming soon. Check back for posts.</p>
+      <div class="card-grid blog-grid"></div>
+
+      <template id="tpl-blog">
+        <article class="card">
+          <p class="card-kicker">Date</p>
+          <h3>New blog post</h3>
+          <p>Short summary of the post.</p>
+        </article>
+      </template>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section tabindex="-1" class="page section alt contact" id="contact">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Contact</h2>
+      <p class="contact-intro">Always happy to chat about projects, ideas, or opportunities.</p>
+
+      <ul class="contact-list">
+        <li>
+          <a href="mailto:kushaalmatam1@gmail.com" class="contact-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="1.5"></path><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+            <span class="contact-label">Email</span>
+            <span class="contact-value">kushaalmatam1@gmail.com</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/matam-kushaal-553268297" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.790 2.66 4.79 6.12V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"></path></svg>
+            <span class="contact-label">LinkedIn</span>
+            <span class="contact-value">matam-kushaal</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/M-Kushaal" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.470-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.220-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"></path></svg>
+            <span class="contact-label">GitHub</span>
+            <span class="contact-value">M-Kushaal</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

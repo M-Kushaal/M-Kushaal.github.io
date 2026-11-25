@@ -150,3 +150,79 @@ document.querySelectorAll("#projects .card[data-link], #blogs .card[data-link]")
 // Initial page (supports deep links like /#projects)
 pages.forEach((p) => (p.hidden = true));
 show(location.hash.slice(1) || "home", { animate: false });
+
+/* Dots react only inside a small neighborhood of the pointer. */
+const homeAtmosphere = document.getElementById("home");
+const dotsCanvas = document.createElement("canvas");
+dotsCanvas.className = "home-dots";
+dotsCanvas.setAttribute("aria-hidden", "true");
+const dotsContext = dotsCanvas.getContext("2d");
+if (dotsContext) {
+  homeAtmosphere.prepend(dotsCanvas);
+  homeAtmosphere.classList.add("has-dot-canvas");
+  const pointer = { x: -1000, y: -1000 };
+  const finePointer = window.matchMedia("(pointer: fine)");
+  let points = [], frame = 0, width = 0, height = 0;
+  function renderDots() {
+    frame = 0;
+    if (homeAtmosphere.hidden || document.hidden) return;
+    dotsContext.clearRect(0, 0, width, height);
+    dotsContext.fillStyle = "#dce4d9";
+    let settling = false;
+    for (const dot of points) {
+      const dx = dot.x - pointer.x, dy = dot.y - pointer.y;
+      const distance = Math.hypot(dx, dy);
+      const influence = !reduceMotion.matches && distance < 135 ? Math.pow(1 - distance / 135, 2) * 14 : 0;
+      const targetX = distance > 0 ? -dx / distance * influence : 0;
+      const targetY = distance > 0 ? -dy / distance * influence : 0;
+      dot.dx += (targetX - dot.dx) * 0.16;
+      dot.dy += (targetY - dot.dy) * 0.16;
+      if (Math.abs(targetX - dot.dx) + Math.abs(targetY - dot.dy) > 0.015) settling = true;
+      dotsContext.beginPath();
+      dotsContext.arc(dot.x + dot.dx, dot.y + dot.dy, 1.25, 0, Math.PI * 2);
+      dotsContext.fill();
+    }
+    if (settling) frame = requestAnimationFrame(renderDots);
+  }
+  function scheduleDots() {
+    if (!frame && !homeAtmosphere.hidden && !document.hidden) frame = requestAnimationFrame(renderDots);
+  }
+  function sizeDots() {
+    if (!homeAtmosphere.clientWidth || !homeAtmosphere.clientHeight) return;
+    width = homeAtmosphere.clientWidth;
+    height = homeAtmosphere.clientHeight;
+    const scale = Math.min(window.devicePixelRatio || 1, 2);
+    dotsCanvas.width = Math.round(width * scale);
+    dotsCanvas.height = Math.round(height * scale);
+    dotsContext.setTransform(scale, 0, 0, scale, 0, 0);
+    points = [];
+    for (let y = 16; y < height; y += 32) for (let x = 16; x < width; x += 32) {
+      points.push({x, y, dx: 0, dy: 0});
+    }
+    scheduleDots();
+  }
+  homeAtmosphere.addEventListener("pointermove", event => {
+    if (!finePointer.matches || reduceMotion.matches || event.pointerType === "touch") return;
+    const rect = homeAtmosphere.getBoundingClientRect();
+    pointer.x = event.clientX - rect.left;
+    pointer.y = event.clientY - rect.top;
+    scheduleDots();
+  }, {passive: true});
+  homeAtmosphere.addEventListener("pointerleave", () => {
+    pointer.x = pointer.y = -1000;
+    scheduleDots();
+  });
+  reduceMotion.addEventListener("change", () => {
+    pointer.x = pointer.y = -1000;
+    points.forEach(dot => { dot.dx = dot.dy = 0; });
+    scheduleDots();
+  });
+  const dotsResize = new ResizeObserver(sizeDots);
+  dotsResize.observe(homeAtmosphere);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { cancelAnimationFrame(frame); frame = 0; }
+    else scheduleDots();
+  });
+  window.addEventListener("pagehide", () => { cancelAnimationFrame(frame); frame = 0; });
+  sizeDots();
+}

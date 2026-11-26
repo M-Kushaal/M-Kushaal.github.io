@@ -163,6 +163,7 @@ if (dotsContext) {
   const pointer = { x: -1000, y: -1000 };
   const finePointer = window.matchMedia("(pointer: fine)");
   let points = [], frame = 0, width = 0, height = 0;
+  let textBarrier = null;
   function renderDots() {
     frame = 0;
     if (homeAtmosphere.hidden || document.hidden) return;
@@ -178,10 +179,20 @@ if (dotsContext) {
       dot.dx += (targetX - dot.dx) * 0.16;
       dot.dy += (targetY - dot.dy) * 0.16;
       if (Math.abs(targetX - dot.dx) + Math.abs(targetY - dot.dy) > 0.015) settling = true;
+      const x = dot.x + dot.dx, y = dot.y + dot.dy;
+      if (textBarrier) {
+        const gapX = Math.max(textBarrier.left - x, 0, x - textBarrier.right);
+        const gapY = Math.max(textBarrier.top - y, 0, y - textBarrier.bottom);
+        const gap = Math.hypot(gapX, gapY);
+        // Keep the complete dot outside the clear zone, with a soft approach.
+        if (gap <= 2) continue;
+        dotsContext.globalAlpha = Math.min(1, (gap - 2) / 24);
+      }
       dotsContext.beginPath();
-      dotsContext.arc(dot.x + dot.dx, dot.y + dot.dy, 1.25, 0, Math.PI * 2);
+      dotsContext.arc(x, y, 1.25, 0, Math.PI * 2);
       dotsContext.fill();
     }
+    dotsContext.globalAlpha = 1;
     if (settling) frame = requestAnimationFrame(renderDots);
   }
   function scheduleDots() {
@@ -191,6 +202,14 @@ if (dotsContext) {
     if (!homeAtmosphere.clientWidth || !homeAtmosphere.clientHeight) return;
     width = homeAtmosphere.clientWidth;
     height = homeAtmosphere.clientHeight;
+    const homeBounds = homeAtmosphere.getBoundingClientRect();
+    const textBounds = homeAtmosphere.querySelector(".hero-content").getBoundingClientRect();
+    textBarrier = {
+      left: textBounds.left - homeBounds.left - 16,
+      right: textBounds.right - homeBounds.left + 16,
+      top: textBounds.top - homeBounds.top - 16,
+      bottom: textBounds.bottom - homeBounds.top + 16
+    };
     const scale = Math.min(window.devicePixelRatio || 1, 2);
     dotsCanvas.width = Math.round(width * scale);
     dotsCanvas.height = Math.round(height * scale);
@@ -219,10 +238,83 @@ if (dotsContext) {
   });
   const dotsResize = new ResizeObserver(sizeDots);
   dotsResize.observe(homeAtmosphere);
+  dotsResize.observe(homeAtmosphere.querySelector(".hero-content"));
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) { cancelAnimationFrame(frame); frame = 0; }
     else scheduleDots();
   });
   window.addEventListener("pagehide", () => { cancelAnimationFrame(frame); frame = 0; });
   sizeDots();
+}
+
+/* Deform the ink's internal wisps; the image itself stays fixed in place. */
+const inkFilters = document.getElementById("inkFilters");
+function syncInkDiffusion() {
+  if (reduceMotion.matches || document.hidden || homeAtmosphere.hidden) inkFilters.pauseAnimations();
+  else inkFilters.unpauseAnimations();
+}
+reduceMotion.addEventListener("change", syncInkDiffusion);
+document.addEventListener("visibilitychange", syncInkDiffusion);
+new MutationObserver(syncInkDiffusion).observe(homeAtmosphere, {attributes: true, attributeFilter: ["hidden"]});
+window.addEventListener("pagehide", () => inkFilters.pauseAnimations());
+window.addEventListener("pageshow", syncInkDiffusion);
+syncInkDiffusion();
+
+/* A small displacement field stirs only the ink near the mouse. */
+const inkCursorMap = document.getElementById("inkCursorMap");
+const flowCanvas = document.createElement("canvas");
+flowCanvas.width = 96;
+flowCanvas.height = 64;
+const flowContext = flowCanvas.getContext("2d");
+if (flowContext) {
+  const field = flowContext.createImageData(96, 64);
+  let flowX = -1000, flowY = -1000, flowEnergy = 0, flowFrame = 0, flowTime = 0;
+  function paintCursorFlow(time = 0) {
+    flowFrame = 0;
+    if (time && time - flowTime < 33 && flowEnergy > 0.01) {
+      flowFrame = requestAnimationFrame(paintCursorFlow);
+      return;
+    }
+    flowTime = time;
+    const width = homeAtmosphere.clientWidth + 160;
+    const height = homeAtmosphere.clientHeight + 160;
+    for (let y = 0; y < 64; y++) for (let x = 0; x < 96; x++) {
+      const index = (y * 96 + x) * 4;
+      const dx = (x + 0.5) / 96 * width - flowX;
+      const dy = (y + 0.5) / 64 * height - flowY;
+      const falloff = Math.max(0, 1 - Math.hypot(dx, dy) / 180);
+      const angle = falloff * falloff * flowEnergy * 0.35;
+      const shiftX = dx * Math.cos(angle) - dy * Math.sin(angle) - dx;
+      const shiftY = dx * Math.sin(angle) + dy * Math.cos(angle) - dy;
+      field.data[index] = Math.round(128 + shiftX / 70 * 255);
+      field.data[index + 1] = Math.round(128 + shiftY / 70 * 255);
+      field.data[index + 2] = 128;
+      field.data[index + 3] = 255;
+    }
+    flowContext.putImageData(field, 0, 0);
+    inkCursorMap.setAttribute("href", flowCanvas.toDataURL());
+    flowEnergy *= 0.94;
+    if (flowEnergy > 0.01 && !reduceMotion.matches && !document.hidden && !homeAtmosphere.hidden) {
+      flowFrame = requestAnimationFrame(paintCursorFlow);
+    }
+  }
+  homeAtmosphere.addEventListener("pointermove", event => {
+    if (reduceMotion.matches || event.pointerType === "touch") return;
+    const rect = homeAtmosphere.getBoundingClientRect();
+    flowX = event.clientX - rect.left + 80;
+    flowY = event.clientY - rect.top + 80;
+    flowEnergy = 1;
+    if (!flowFrame) flowFrame = requestAnimationFrame(paintCursorFlow);
+  }, {passive: true});
+  function stopCursorFlow() {
+    cancelAnimationFrame(flowFrame);
+    flowFrame = 0;
+    flowEnergy = 0;
+    paintCursorFlow();
+  }
+  reduceMotion.addEventListener("change", stopCursorFlow);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) stopCursorFlow(); });
+  new MutationObserver(() => { if (homeAtmosphere.hidden) stopCursorFlow(); }).observe(homeAtmosphere, {attributes: true, attributeFilter: ["hidden"]});
+  window.addEventListener("pagehide", stopCursorFlow);
+  paintCursorFlow();
 }

@@ -3,3 +3,4 @@
 .backups/
 __pycache__/
 *.pdf
+node_modules/

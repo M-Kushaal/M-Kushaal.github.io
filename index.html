@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400&amp;family=Playfair+Display:wght@400;500&amp;family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="preload" href="assets/ocean-home.js" as="script">
 </head>
 <body>
   <svg id="inkFilters" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none">
@@ -438,6 +439,7 @@
   </main>
 
   <script src="script.js"></script>
+  <script src="assets/ocean-home.js" defer onerror="document.getElementById('home').dataset.oceanState='fallback';document.getElementById('home').dispatchEvent(new Event('oceanvisibilitychange'))"></script>
 
 
 

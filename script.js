@@ -21,6 +21,12 @@ function setMenu(open) {
   document.body.classList.toggle("menu-open", open);
 }
 toggle.addEventListener("click", () => setMenu(!nav.classList.contains("open")));
+window.matchMedia("(min-width: 1025px)").addEventListener("change", event => {
+  if (!event.matches) return;
+  const restoreNavFocus = document.activeElement === toggle;
+  setMenu(false);
+  if (restoreNavFocus) (links.find(link => link.classList.contains("active")) || links[0]).focus({preventScroll:true});
+});
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && nav.classList.contains("open")) {
     setMenu(false);
@@ -153,6 +159,9 @@ show(location.hash.slice(1) || "home", { animate: false });
 
 /* Dots react only inside a small neighborhood of the pointer. */
 const homeAtmosphere = document.getElementById("home");
+homeAtmosphere.addEventListener("scroll", () => {
+  homeAtmosphere.style.setProperty("--home-scroll-y", `${homeAtmosphere.scrollTop}px`);
+}, {passive: true});
 const dotsCanvas = document.createElement("canvas");
 dotsCanvas.className = "home-dots";
 dotsCanvas.setAttribute("aria-hidden", "true");
@@ -166,7 +175,7 @@ if (dotsContext) {
   let textBarrier = null;
   function renderDots() {
     frame = 0;
-    if (homeAtmosphere.hidden || document.hidden) return;
+    if (homeAtmosphere.hidden || document.hidden || homeAtmosphere.classList.contains("ocean-ready")) return;
     dotsContext.clearRect(0, 0, width, height);
     dotsContext.fillStyle = "#dce4d9";
     let settling = false;
@@ -196,7 +205,7 @@ if (dotsContext) {
     if (settling) frame = requestAnimationFrame(renderDots);
   }
   function scheduleDots() {
-    if (!frame && !homeAtmosphere.hidden && !document.hidden) frame = requestAnimationFrame(renderDots);
+    if (!frame && !homeAtmosphere.hidden && !document.hidden && !homeAtmosphere.classList.contains("ocean-ready")) frame = requestAnimationFrame(renderDots);
   }
   function sizeDots() {
     if (!homeAtmosphere.clientWidth || !homeAtmosphere.clientHeight) return;
@@ -239,22 +248,30 @@ if (dotsContext) {
   const dotsResize = new ResizeObserver(sizeDots);
   dotsResize.observe(homeAtmosphere);
   dotsResize.observe(homeAtmosphere.querySelector(".hero-content"));
+  homeAtmosphere.addEventListener("scroll", sizeDots, {passive: true});
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) { cancelAnimationFrame(frame); frame = 0; }
     else scheduleDots();
   });
   window.addEventListener("pagehide", () => { cancelAnimationFrame(frame); frame = 0; });
+  homeAtmosphere.addEventListener("oceanvisibilitychange", () => {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    scheduleDots();
+  });
   sizeDots();
 }
 
 /* Deform the ink's internal wisps; the image itself stays fixed in place. */
 const inkFilters = document.getElementById("inkFilters");
 function syncInkDiffusion() {
-  if (reduceMotion.matches || document.hidden || homeAtmosphere.hidden) inkFilters.pauseAnimations();
+  const fallbackVisible = ["fallback", "reduced-motion"].includes(homeAtmosphere.dataset.oceanState);
+  if (reduceMotion.matches || document.hidden || homeAtmosphere.hidden || !fallbackVisible) inkFilters.pauseAnimations();
   else inkFilters.unpauseAnimations();
 }
 reduceMotion.addEventListener("change", syncInkDiffusion);
 document.addEventListener("visibilitychange", syncInkDiffusion);
+homeAtmosphere.addEventListener("oceanvisibilitychange", syncInkDiffusion);
 new MutationObserver(syncInkDiffusion).observe(homeAtmosphere, {attributes: true, attributeFilter: ["hidden"]});
 window.addEventListener("pagehide", () => inkFilters.pauseAnimations());
 window.addEventListener("pageshow", syncInkDiffusion);
@@ -299,7 +316,7 @@ if (flowContext) {
     }
   }
   homeAtmosphere.addEventListener("pointermove", event => {
-    if (reduceMotion.matches || event.pointerType === "touch") return;
+    if (reduceMotion.matches || event.pointerType === "touch" || homeAtmosphere.classList.contains("ocean-ready")) return;
     const rect = homeAtmosphere.getBoundingClientRect();
     flowX = event.clientX - rect.left + 80;
     flowY = event.clientY - rect.top + 80;
@@ -313,6 +330,7 @@ if (flowContext) {
     paintCursorFlow();
   }
   reduceMotion.addEventListener("change", stopCursorFlow);
+  homeAtmosphere.addEventListener("oceanvisibilitychange", stopCursorFlow);
   document.addEventListener("visibilitychange", () => { if (document.hidden) stopCursorFlow(); });
   new MutationObserver(() => { if (homeAtmosphere.hidden) stopCursorFlow(); }).observe(homeAtmosphere, {attributes: true, attributeFilter: ["hidden"]});
   window.addEventListener("pagehide", stopCursorFlow);

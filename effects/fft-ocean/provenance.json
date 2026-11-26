@@ -1,0 +1,26 @@
+{
+  "source": "User-provided fft-ocean.zip",
+  "integration": "The original FFT, ocean spectrum, particle rendering, camera, and bloom shaders are retained. The React wrapper is replaced by a static-site entry point, and shader modules are compiled into assets/ocean-home.js.",
+  "adaptations": [
+    "Green particle and foam colors to match the existing homepage palette",
+    "30 fps render cap and 1.25 maximum device pixel ratio",
+    "Pause rendering when the homepage or browser tab is hidden",
+    "Release the renderer on page exit and recreate it on restoration",
+    "Use existing ink background if WebGPU is unavailable or rendering fails",
+    "Respect reduced motion by retaining the static fallback",
+    "Exclude particles from the existing text panel"
+  ],
+  "build": "npm ci && npm run build:ocean",
+  "runtime": "Self-contained browser bundle; no CDN or React dependency at runtime",
+  "library": {"name":"vgpu","version":"0.6.0","license":"MIT","notice":"assets/vgpu-LICENSE.txt","source":"https://github.com/vercel-labs/vgpu"},
+  "verification": [
+    "Installed Chrome: WebGPU initialization and actual animated ocean rendering",
+    "GPU submissions stop on other portfolio tabs and resume on Home",
+    "Old ink animations pause while ocean is active",
+    "375px layout has no horizontal page overflow and text panel remains inside viewport",
+    "Reduced-motion preference removes the ocean and restores the static fallback",
+    "Returning to normal motion recreates the ocean renderer",
+    "No JavaScript errors observed in these journeys"
+  ],
+  "limits": "Chrome tested. No Safari, Firefox, or physical mobile device verification. WebGPU support varies by browser and device."
+}

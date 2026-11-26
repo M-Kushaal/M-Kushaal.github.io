@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": { "build:ocean": "node tools/build-ocean.mjs" },
+  "devDependencies": {
+    "@vgpu/wgsl": "0.6.0",
+    "esbuild": "0.28.2",
+    "vgpu": "0.6.0"
+  }
+}

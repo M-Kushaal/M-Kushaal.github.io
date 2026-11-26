@@ -972,7 +972,10 @@ body.editing .ach-box > li { padding-right: 190px; }
 
 /* Content tabs: color-only continuation of the homepage palette. */
 @media (min-width: 1025px) {
-  #home .hero-content { transform: translateX(clamp(0px, calc((100vw - 1024px) * 0.154), 64px)); }
+  #home .hero-content {
+    transform-origin: right bottom;
+    transform: translate(clamp(0px, calc((100vw - 1024px) * 0.2), 84px), clamp(0px, calc((100svh - 500px) * 0.05), 20px)) scale(0.94);
+  }
 }
 :root { color-scheme: dark; }
 .page.section .card,

@@ -3,4 +3,5 @@
 .backups/
 __pycache__/
 *.pdf
+!Kushaal_Matam_ML_Resume.pdf
 node_modules/

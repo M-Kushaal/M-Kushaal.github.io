@@ -4,18 +4,19 @@
   "adaptations": [
     "Green particle and foam colors to match the existing homepage palette",
     "30 fps render cap and 1.25 maximum device pixel ratio",
-    "Pause rendering when the homepage or browser tab is hidden",
+    "Reuse one ocean renderer across all portfolio tabs, pausing when the browser tab is hidden",
     "Release the renderer on page exit and recreate it on restoration",
     "Use existing ink background if WebGPU is unavailable or rendering fails",
     "Respect reduced motion by retaining the static fallback",
-    "Exclude particles from the existing text panel"
+    "Exclude particles from the existing homepage text panel",
+    "Dim the ocean on all other tabs with a 76 percent black overlay"
   ],
   "build": "npm ci && npm run build:ocean",
   "runtime": "Self-contained browser bundle; no CDN or React dependency at runtime",
   "library": {"name":"vgpu","version":"0.6.0","license":"MIT","notice":"assets/vgpu-LICENSE.txt","source":"https://github.com/vercel-labs/vgpu"},
   "verification": [
     "Installed Chrome: WebGPU initialization and actual animated ocean rendering",
-    "GPU submissions stop on other portfolio tabs and resume on Home",
+    "One ocean canvas renders across all six tabs; the hidden homepage cannot show through content pages",
     "Old ink animations pause while ocean is active",
     "375px layout has no horizontal page overflow and text panel remains inside viewport",
     "Reduced-motion preference removes the ocean and restores the static fallback",

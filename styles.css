@@ -176,7 +176,7 @@ html, body { height: 100%; overflow: hidden; }
   overscroll-behavior: contain;
   will-change: transform;
 }
-.page[hidden] { display: none; }
+.page[hidden] { display: none !important; }
 .page:focus { outline: none; }
 
 /* Content pages sit below the solid title bar */
@@ -974,7 +974,7 @@ body.editing .ach-box > li { padding-right: 190px; }
 @media (min-width: 1025px) {
   #home .hero-content {
     transform-origin: right bottom;
-    transform: translate(clamp(0px, calc((100vw - 1024px) * 0.2), 84px), clamp(0px, calc((100svh - 500px) * 0.05), 20px)) scale(0.94);
+    transform: translate(clamp(0px, calc((100vw - 1024px) * 0.25), 104px), clamp(0px, calc((100svh - 500px) * 0.09), 36px)) scale(0.86);
   }
 }
 :root { color-scheme: dark; }
@@ -1046,3 +1046,11 @@ body.editing .ach-box > li { padding-right: 190px; }
 }
 .home-ocean, .home-dots { top: var(--home-scroll-y, 0px); bottom: auto; }
 #home::before, #home::after { top: calc(var(--home-scroll-y, 0px) - 80px); bottom: auto; height: calc(100% + 160px); }
+
+/* One shared ocean behind every tab; reading pages get a darker overlay. */
+.pages { z-index: 1; }
+.home-ocean.site-ocean { position: fixed; inset: 0; top: 0; z-index: 0; }
+body.ocean-active { background: #080d0b; }
+.ocean-active .site-ocean { opacity: 0.9; }
+.ocean-active #home { background: transparent; }
+.ocean-active .page.section { background: rgba(0, 0, 0, 0.76); }

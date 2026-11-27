@@ -6,9 +6,11 @@ let renderer: ReturnType<typeof createRenderer> | undefined;
 let unavailable = false;
 let generation = 0;
 let canvas: HTMLCanvasElement | undefined;
+let maskKey = '';
 
 function ready(value: boolean) {
   home.classList.toggle('ocean-ready', value);
+  document.body.classList.toggle('ocean-active', value);
   home.dispatchEvent(new Event('oceanvisibilitychange'));
 }
 function stop() {
@@ -17,6 +19,7 @@ function stop() {
   renderer = undefined;
   canvas?.remove();
   canvas = undefined;
+  maskKey = '';
   ready(false);
 }
 function fallback(error: unknown) {
@@ -27,8 +30,16 @@ function fallback(error: unknown) {
 }
 function maskText() {
   if (!canvas) return;
-  const h = home.getBoundingClientRect();
+  if (document.body.dataset.page !== 'home') {
+    if (maskKey !== 'content') { canvas.style.maskImage = 'none'; maskKey = 'content'; }
+    return;
+  }
+  const h = {width: innerWidth, height: innerHeight, left: 0, top: 0};
   const text = home.querySelector('.hero-content')!.getBoundingClientRect();
+  if (!text.width || !text.height) return;
+  const key = [h.width,h.height,text.left,text.top,text.width,text.height].map(Math.round).join(',');
+  if (key === maskKey) return;
+  maskKey = key;
   // Feather the particle-free area into the glass instead of cutting a black box.
   const x = text.left - h.left + 6;
   const y = text.top - h.top + 6;
@@ -41,19 +52,20 @@ function maskText() {
 function sync() {
   if (preference.matches) { home.dataset.oceanState = 'reduced-motion'; stop(); return; }
   if (unavailable || !navigator.gpu) { home.dataset.oceanState = 'fallback'; ready(false); return; }
-  if (home.hidden || document.hidden) { renderer?.setPaused(true); return; }
+  if (document.hidden) { renderer?.setPaused(true); return; }
   if (renderer) { renderer.setPaused(false); maskText(); return; }
   const attempt = ++generation;
   canvas = document.createElement('canvas');
-  canvas.className = 'home-ocean';
+  canvas.className = 'home-ocean site-ocean';
   canvas.setAttribute('aria-hidden', 'true');
-  home.prepend(canvas);
+  document.body.prepend(canvas);
   maskText();
   home.dataset.oceanState = 'loading';
   renderer = createRenderer({canvas,
     onFrame: () => {
       if (attempt !== generation) return;
       home.dataset.oceanState = 'running';
+      maskText();
       if (!home.classList.contains('ocean-ready')) ready(true);
     },
     onError: fallback
@@ -64,7 +76,7 @@ const resize = new ResizeObserver(maskText);
 resize.observe(home);
 resize.observe(home.querySelector('.hero-content')!);
 home.addEventListener('scroll', maskText, {passive:true});
-new MutationObserver(sync).observe(home, {attributes:true,attributeFilter:['hidden']});
+new MutationObserver(sync).observe(document.body, {attributes:true,attributeFilter:['data-page']});
 preference.addEventListener('change', sync);
 document.addEventListener('visibilitychange', sync);
 addEventListener('pagehide', stop);

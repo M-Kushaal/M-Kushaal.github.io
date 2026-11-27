@@ -65,7 +65,7 @@ with sync_playwright() as p:
     for width,height in [(320,568),(640,360),(768,1024),(1025,768),(1920,1080),(3440,1440),(375,812),(1440,900)]:
         page.set_viewport_size({'width':width,'height':height})
         page.wait_for_timeout(950)
-        value=page.locator('#home').evaluate('''e=>{const c=e.querySelector('.home-ocean');return {
+        value=page.locator('#home').evaluate('''e=>{const c=document.querySelector('.site-ocean');return {
           state:e.dataset.oceanState,error:e.dataset.oceanError,
           canvas:c?[c.clientWidth,c.clientHeight]:null,
           softMask:c?getComputedStyle(c).maskImage.startsWith('url('):false

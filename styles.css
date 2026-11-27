@@ -549,8 +549,8 @@ body.editing .ach-box > li { padding-right: 190px; }
 
 .contact-list {
   list-style: none;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 24px;
 }
 .contact-list li { display: flex; flex: 1 1 0; min-width: 0; }
@@ -666,7 +666,9 @@ body.editing .ach-box > li { padding-right: 190px; }
 .ach-box,
 .tl-logo { border-color: var(--line); }
 .card,
-.contact-card { padding: 28px; }
+.contact-card { padding: 24px; }
+.contact-card .contact-value { font-size: 0.875rem; }
+.contact-card[href^="mailto:"] .contact-value { white-space: nowrap; }
 .card-grid,
 .contact-list { gap: var(--space-3); }
 .tl-item { border-color: var(--line); padding: var(--space-4) 0; }
@@ -1017,7 +1019,7 @@ body.editing .ach-box > li { padding-right: 190px; }
 .tl-body, .tl-meta, .card { min-width: 0; }
 .tl-body h3, .card h3 { overflow-wrap: anywhere; }
 @media (max-width: 1024px) {
-  .contact-list { flex-direction: column; }
+  .contact-list { grid-template-columns: 1fr; }
   .contact-card { min-height: 100px; }
 }
 @media (min-width: 641px) and (max-width: 900px) {
